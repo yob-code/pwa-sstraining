@@ -24,12 +24,12 @@ input,button,select{font-family:inherit;font-size:16px;}
 #header{padding:14px 16px;border-bottom:1px solid #2a2a3a;display:flex;align-items:center;gap:10px;background:#0d0d11;position:sticky;top:0;z-index:100;}
 #header-bar{width:5px;height:28px;background:linear-gradient(180deg,#7c6af7,#4ade80);border-radius:3px;flex-shrink:0;}
 #header-title{font-size:17px;font-weight:800;letter-spacing:-0.5px;color:#f0f0f5;}
-#header-sub{font-size:13px;color:#c8c8e0;margin-top:1px;}
-#header-date{margin-left:auto;font-size:14px;color:#c8c8e0;background:#1a1a25;padding:5px 10px;border-radius:8px;}
+#header-sub{font-size:11px;color:#6b6b85;margin-top:1px;}
+#header-date{margin-left:auto;font-size:12px;color:#6b6b85;background:#1a1a25;padding:5px 10px;border-radius:8px;}
 
 /* タブバー */
 #tabbar{display:flex;border-bottom:1px solid #2a2a3a;background:#0d0d11;position:sticky;top:59px;z-index:99;}
-.tab-btn{flex:1;padding:13px 0;background:none;border:none;border-bottom:2px solid transparent;color:#b0b0c8;font-size:13px;font-weight:400;cursor:pointer;transition:all .15s;display:flex;flex-direction:column;align-items:center;gap:3px;}
+.tab-btn{flex:1;padding:13px 0;background:none;border:none;border-bottom:2px solid transparent;color:#6b6b85;font-size:12px;font-weight:400;cursor:pointer;transition:all .15s;display:flex;flex-direction:column;align-items:center;gap:3px;}
 .tab-btn svg{opacity:.5;transition:opacity .15s;}
 .tab-btn.active{color:#f0f0f5;font-weight:700;border-bottom-color:#7c6af7;}
 .tab-btn.active svg{opacity:1;}
@@ -41,42 +41,42 @@ input,button,select{font-family:inherit;font-size:16px;}
 
 /* カード */
 .card{background:#1e1e2e;border:1px solid #2a2a3a;border-radius:14px;padding:15px 16px;margin-bottom:12px;}
-.card-label{font-size:13px;color:#c8c8e0;letter-spacing:.5px;margin-bottom:10px;text-transform:uppercase;font-weight:600;}
+.card-label{font-size:11px;color:#6b6b85;letter-spacing:.5px;margin-bottom:10px;text-transform:uppercase;}
 
 /* ボタン */
 .btn-primary{width:100%;padding:15px;background:linear-gradient(135deg,#7c6af7,#a78bfa);color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;letter-spacing:-.2px;}
 .btn-primary:active{opacity:.85;}
-.btn-primary:disabled{background:#2a2a3a;color:#c8c8e0;cursor:not-allowed;}
+.btn-primary:disabled{background:#2a2a3a;color:#6b6b85;cursor:not-allowed;}
 .btn-green{background:linear-gradient(135deg,#4ade80,#22c55e);color:#0d0d11;}
 .btn-sm{padding:8px 14px;border-radius:8px;border:1px solid #2a2a3a;background:#1e1e2e;color:#c0c0d0;font-size:14px;cursor:pointer;}
-.btn-danger{background:none;border:none;color:#c8c8e0;cursor:pointer;font-size:20px;padding:0 6px;line-height:1;}
+.btn-danger{background:none;border:none;color:#6b6b85;cursor:pointer;font-size:20px;padding:0 6px;line-height:1;}
 
 /* ステッパー */
 .stepper{display:flex;align-items:center;gap:8px;}
-.stepper-btn{width:36px;height:36px;border-radius:9px;border:1px solid #3a3a4a;background:#0d0d11;color:#e0e0f0;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;}
-.stepper-val{min-width:36px;text-align:center;font-size:20px;font-weight:700;color:#f0f0f5;}
+.stepper-btn{width:32px;height:32px;border-radius:8px;border:1px solid #2a2a3a;background:#0d0d11;color:#c0c0d0;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;}
+.stepper-val{min-width:34px;text-align:center;font-size:17px;font-weight:700;color:#f0f0f5;}
 
 /* Day セレクタ */
 .day-selector{display:flex;gap:8px;margin-bottom:16px;}
-.day-btn{flex:1;padding:12px 4px;border-radius:11px;border:1px solid #2a2a3a;background:#1e1e2e;color:#c8c8e0;font-size:13px;font-weight:400;cursor:pointer;text-align:center;transition:all .15s;}
+.day-btn{flex:1;padding:11px 4px;border-radius:11px;border:1px solid #2a2a3a;background:#1e1e2e;color:#6b6b85;font-size:12px;font-weight:400;cursor:pointer;text-align:center;transition:all .15s;}
 .day-btn.active{border-color:#7c6af7;background:#1e1b3a;color:#a78bfa;font-weight:700;}
 
 /* 種目行 */
 .ex-row{background:#0d0d11;border:1px solid #2a2a3a;border-radius:11px;padding:13px 14px;margin-bottom:9px;}
 .ex-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:11px;}
-.ex-name{font-size:17px;font-weight:700;color:#f0f0f5;}
-.ex-note{font-size:13px;color:#c8c8e0;margin-top:2px;}
+.ex-name{font-size:15px;font-weight:700;color:#f0f0f5;}
+.ex-note{font-size:11px;color:#6b6b85;margin-top:2px;}
 .ex-controls{display:flex;gap:20px;align-items:center;}
-.ex-ctrl-label{font-size:14px;color:#c8c8e0;margin-bottom:6px;font-weight:600;}
+.ex-ctrl-label{font-size:11px;color:#6b6b85;margin-bottom:6px;}
 .ex-volume{margin-left:auto;text-align:right;}
-.ex-volume-num{font-size:24px;font-weight:800;color:#a78bfa;}
-.ex-volume-label{font-size:14px;color:#c8c8e0;font-weight:600;}
+.ex-volume-num{font-size:20px;font-weight:800;color:#7c6af7;}
+.ex-volume-label{font-size:11px;color:#6b6b85;}
 
 /* 入力フィールド */
 .add-row{display:flex;gap:8px;margin-bottom:16px;}
 .input-field{flex:1;background:#1e1e2e;border:1.5px solid #3a3a4a;border-radius:10px;padding:12px 14px;color:#f0f0f5;font-size:16px;outline:none;}
 .input-field:focus{border-color:#7c6af7;}
-.input-field::placeholder{color:#7070a0;}
+.input-field::placeholder{color:#5a5a70;}
 
 /* 食事タブ - カメラ/アルバムボタン */
 .meal-action-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
@@ -84,7 +84,7 @@ input,button,select{font-family:inherit;font-size:16px;}
 .meal-action-btn:active{background:#2a2a3a;}
 .meal-action-btn svg{color:#7c6af7;}
 .meal-action-btn span{font-size:14px;font-weight:600;}
-.meal-action-btn small{font-size:13px;color:#c8c8e0;}
+.meal-action-btn small{font-size:11px;color:#6b6b85;}
 
 /* プレビュー */
 .preview-wrap{border-radius:12px;overflow:hidden;margin-bottom:12px;position:relative;background:#1e1e2e;}
@@ -95,7 +95,7 @@ input,button,select{font-family:inherit;font-size:16px;}
 .dialog-overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:200;display:flex;align-items:flex-end;justify-content:center;}
 .dialog-box{background:#1e1e2e;border-radius:20px 20px 0 0;padding:24px 20px;width:100%;max-width:480px;}
 .dialog-title{font-size:17px;font-weight:700;text-align:center;margin-bottom:8px;color:#f0f0f5;}
-.dialog-sub{font-size:14px;color:#c8c8e0;text-align:center;margin-bottom:20px;}
+.dialog-sub{font-size:14px;color:#6b6b85;text-align:center;margin-bottom:20px;}
 .dialog-img{width:100%;border-radius:10px;margin-bottom:16px;max-height:200px;object-fit:cover;}
 .dialog-btns{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
 .dialog-cancel{padding:14px;border-radius:10px;border:1px solid #2a2a3a;background:#0d0d11;color:#c0c0d0;font-size:15px;cursor:pointer;font-weight:600;}
@@ -112,26 +112,26 @@ input,button,select{font-family:inherit;font-size:16px;}
 /* カロリーヒーロー */
 .cal-hero{display:flex;justify-content:space-between;align-items:center;}
 .cal-num{font-size:42px;font-weight:800;letter-spacing:-2px;line-height:1;color:#f0f0f5;}
-.cal-unit{font-size:14px;color:#c8c8e0;margin-left:5px;font-weight:400;}
+.cal-unit{font-size:14px;color:#6b6b85;margin-left:5px;font-weight:400;}
 
 /* 計測タブ */
 .measure-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-.measure-item label{display:block;font-size:14px;color:#c8c8e0;margin-bottom:7px;font-weight:600;}
+.measure-item label{display:block;font-size:12px;color:#6b6b85;margin-bottom:7px;font-weight:600;}
 .measure-input{width:100%;background:#0d0d11;border:1.5px solid #3a3a4a;border-radius:10px;padding:12px 14px;color:#f0f0f5;font-size:18px;outline:none;text-align:right;}
 .measure-input:focus{border-color:#7c6af7;}
-.measure-input::placeholder{color:#7070a0;}
+.measure-input::placeholder{color:#4a4a60;}
 .measure-item.full{grid-column:1/-1;}
 
 /* グラフタブ */
 .period-row{display:flex;gap:8px;margin-bottom:16px;overflow-x:auto;padding-bottom:4px;}
-.period-btn{flex-shrink:0;padding:9px 18px;border-radius:8px;border:1px solid #2a2a3a;background:#1e1e2e;color:#c8c8e0;font-size:14px;cursor:pointer;white-space:nowrap;}
+.period-btn{flex-shrink:0;padding:8px 16px;border-radius:8px;border:1px solid #2a2a3a;background:#1e1e2e;color:#6b6b85;font-size:13px;cursor:pointer;white-space:nowrap;}
 .period-btn.active{border-color:#7c6af7;background:#1e1b3a;color:#a78bfa;font-weight:700;}
 .chart-wrap{position:relative;height:190px;margin-bottom:4px;}
 
 /* 履歴 */
 .history-item{display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid #2a2a3a;}
 .history-item:last-child{border-bottom:none;}
-.history-date{font-size:14px;color:#c0c0d8;}
+.history-date{font-size:13px;color:#6b6b85;}
 
 /* タグ */
 .tag-list{display:flex;flex-wrap:wrap;gap:7px;}
@@ -140,20 +140,20 @@ input,button,select{font-family:inherit;font-size:16px;}
 /* 結果グリッド */
 .result-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px;}
 .result-cell{background:#1e1e2e;border:1px solid #2a2a3a;border-radius:11px;padding:13px 10px;text-align:center;}
-.result-cell-label{font-size:13px;color:#c8c8e0;margin-bottom:5px;}
+.result-cell-label{font-size:11px;color:#6b6b85;margin-bottom:5px;}
 .result-cell-val{font-size:22px;font-weight:800;line-height:1;color:#f0f0f5;}
-.result-cell-unit{font-size:13px;color:#c8c8e0;margin-top:3px;}
+.result-cell-unit{font-size:11px;color:#6b6b85;margin-top:3px;}
 
 /* アドバイスボックス */
 .advice-box{background:#1e1b3a;border:1px solid #7c6af733;border-radius:12px;padding:14px 16px;margin-bottom:10px;}
-.advice-label{font-size:13px;color:#a78bfa;margin-bottom:7px;letter-spacing:.5px;font-weight:700;}
-.advice-text{font-size:15px;line-height:1.8;color:#f0f0ff;}
+.advice-label{font-size:11px;color:#7c6af7;margin-bottom:7px;letter-spacing:.5px;font-weight:700;}
+.advice-text{font-size:14px;line-height:1.75;color:#e0e0f0;}
 .meal-advice-box{background:#0f2218;border:1px solid #4ade8033;border-radius:12px;padding:14px 16px;margin-bottom:10px;}
-.meal-advice-label{font-size:13px;color:#4ade80;margin-bottom:7px;letter-spacing:.5px;font-weight:700;}
-.meal-advice-text{font-size:15px;line-height:1.8;color:#d0fde0;}
+.meal-advice-label{font-size:11px;color:#4ade80;margin-bottom:7px;letter-spacing:.5px;font-weight:700;}
+.meal-advice-text{font-size:14px;line-height:1.75;color:#bbf7d0;}
 
 /* ローディング */
-.loading-row{display:flex;align-items:center;gap:12px;padding:16px;background:#1e1e2e;border-radius:11px;color:#c8c8e0;font-size:14px;margin-top:10px;}
+.loading-row{display:flex;align-items:center;gap:12px;padding:16px;background:#1e1e2e;border-radius:11px;color:#6b6b85;font-size:14px;margin-top:10px;}
 .spinner{width:20px;height:20px;border-radius:50%;border:2px solid #2a2a3a;border-top-color:#7c6af7;animation:spin .7s linear infinite;flex-shrink:0;}
 
 /* エラー */
@@ -172,14 +172,14 @@ input,button,select{font-family:inherit;font-size:16px;}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 
 /* 注意書き */
-.note-text{font-size:12px;color:#606080;text-align:center;padding:4px 0 8px;}
+.note-text{font-size:11px;color:#3a3a50;text-align:center;padding:4px 0 8px;}
 
 /* 体型ボックス */
 .body-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
 .body-cell{background:#0d0d11;border:1px solid #2a2a3a;border-radius:10px;padding:13px;text-align:center;}
-.body-cell-label{font-size:13px;color:#c8c8e0;margin-bottom:5px;}
+.body-cell-label{font-size:11px;color:#6b6b85;margin-bottom:5px;}
 .body-cell-val{font-size:24px;font-weight:800;}
-.body-cell-unit{font-size:13px;color:#c8c8e0;}
+.body-cell-unit{font-size:11px;color:#6b6b85;}
 
 @keyframes spin{to{transform:rotate(360deg);}}
 </style>
@@ -219,7 +219,7 @@ input,button,select{font-family:inherit;font-size:16px;}
     <div id="tab-workout" class="tab-pane active">
       <div class="day-selector" id="day-selector"></div>
       <div class="card" style="margin-bottom:12px;padding:12px 14px;">
-        <div style="font-size:13px;color:#c8c8e0;margin-bottom:5px;font-weight:600;">フォーカス</div>
+        <div style="font-size:11px;color:#6b6b85;margin-bottom:5px;font-weight:600;">フォーカス</div>
         <div id="focus-display" style="font-size:15px;color:#c0c0d0;cursor:pointer;"></div>
         <input id="focus-input" class="input-field" style="display:none;margin-top:8px;" onblur="saveFocus()" onkeydown="if(event.key==='Enter')saveFocus()">
       </div>
@@ -291,7 +291,7 @@ input,button,select{font-family:inherit;font-size:16px;}
             <input type="number" id="m-fat" class="measure-input" step="0.1" placeholder="20.0" oninput="calcLBM()">
           </div>
           <div class="measure-item full" id="lbm-row" style="display:none;">
-            <div style="font-size:13px;color:#c8c8e0;margin-bottom:5px;font-weight:600;">除脂肪体重（自動計算）</div>
+            <div style="font-size:11px;color:#6b6b85;margin-bottom:5px;font-weight:600;">除脂肪体重（自動計算）</div>
             <div style="font-size:26px;font-weight:800;color:#4ade80;" id="lbm-val">—</div>
           </div>
           <div class="measure-item">
@@ -454,7 +454,7 @@ function renderDaySelector(){
   el("day-selector").innerHTML=[1,2,3].map(d=>`
     <button class="day-btn ${state.currentDay===d?'active':''}" onclick="selectDay(${d})">
       <div style="font-weight:700;font-size:14px;">Day ${d}</div>
-      <div style="font-size:13px;margin-top:3px;opacity:.9;">${state.menu[d].focus}</div>
+      <div style="font-size:11px;margin-top:3px;opacity:.8;">${state.menu[d].focus}</div>
     </button>`).join("");
 }
 
@@ -489,7 +489,7 @@ function renderExercises(){
   const exs=state.menu[state.currentDay].exercises;
   const list=el("ex-list");
   if(!exs.length){
-    list.innerHTML=`<div style="text-align:center;color:#c8c8e0;padding:24px;font-size:15px;">種目を追加してください</div>`;
+    list.innerHTML=`<div style="text-align:center;color:#6b6b85;padding:24px;font-size:15px;">種目を追加してください</div>`;
     return;
   }
   list.innerHTML=exs.map(ex=>`
@@ -670,7 +670,7 @@ function renderMeasureHistory(){
   const dates=Object.keys(logs).sort().reverse().slice(0,12);
   const hist=el("measure-history");
   if(!dates.length){
-    hist.innerHTML=`<div style="color:#c8c8e0;font-size:14px;text-align:center;padding:12px;">記録がありません</div>`;
+    hist.innerHTML=`<div style="color:#6b6b85;font-size:14px;text-align:center;padding:12px;">記録がありません</div>`;
     return;
   }
   hist.innerHTML=dates.map(d=>{
@@ -744,8 +744,8 @@ const CHART_DEFAULTS={
   responsive:true,maintainAspectRatio:false,
   plugins:{legend:{display:false,labels:{color:"#9191a8",font:{size:11},boxWidth:12}}},
   scales:{
-    x:{ticks:{color:"#a8a8c0",font:{size:11},maxRotation:0,maxTicksLimit:7},grid:{color:"#2a2a3a"}},
-    y:{ticks:{color:"#a8a8c0",font:{size:11}},grid:{color:"#2a2a3a"}}
+    x:{ticks:{color:"#6b6b85",font:{size:10},maxRotation:0,maxTicksLimit:7},grid:{color:"#2a2a3a"}},
+    y:{ticks:{color:"#6b6b85",font:{size:10}},grid:{color:"#2a2a3a"}}
   }
 };
 
