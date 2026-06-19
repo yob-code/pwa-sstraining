@@ -228,12 +228,13 @@ input,button,select{font-family:inherit;font-size:16px;}
         <input id="new-ex-name" class="input-field" placeholder="種目名を追加…" onkeydown="if(event.key==='Enter')addExercise()">
         <button class="btn-sm" onclick="addExercise()" style="background:#7c6af7;color:#fff;border-color:#7c6af7;font-weight:700;padding:12px 16px;">追加</button>
       </div>
-      <button class="btn-primary" id="workout-save-btn" onclick="saveWorkout()">記録する</button>
-      <button class="claude-btn" onclick="sendWorkoutToClaude()">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
-        Claudeにメニューを分析してもらう
-      </button>
-      <div id="workout-error" class="error-box" style="display:none;"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+        <button class="btn-primary" onclick="saveWorkout()" style="background:#1e1e2e;border:1.5px solid #3a3a4a;color:#f0f0f5;">記録する</button>
+        <button class="btn-primary" onclick="analyzeWorkoutWithGemini()">AI分析</button>
+      </div>
+      <div id="workout-loading" style="display:none;margin-top:10px;" class="loading-row"><div class="spinner"></div>AI分析中…</div>
+      <div id="workout-error" class="error-box" style="display:none;margin-top:10px;"></div>
+      <div id="workout-result" style="display:none;margin-top:14px;"></div>
     </div>
 
     <!-- 食事タブ -->
