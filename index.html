@@ -611,24 +611,40 @@ function closeMealDialog(){
 
 function confirmAndAnalyzeMeal(){
   closeMealDialog();
-  sendMealToClaude();
+  analyzeMealWithGemini();
 }
 
-function sendMealToClaude(){
-  const msg="この食事のPFC（タンパク質・脂質・炭水化物）とカロリーを分析してください。料理名と量の推定、タンパク質評価（不足/適切/十分）、50代男性の筋トレ目的でのアドバイスも教えてください。";
+const WORKER_URL = "https://old-king-9bab.ksey-fgljfsmg7475219t.workers.dev";
 
-  // 写真をClaudeに送る（アーティファクト内ではsendPromptで送信）
-  if(window.parent && window.parent !== window){
-    // 画像をbase64でpostMessageで送る（Claude artifact API）
-    window.parent.postMessage({type:"sendPrompt", text:msg, imageBase64: state.mealBase64},"*");
-    showToast("Claudeに送信しました");
-    // 記録はテキストのみ保存
-    saveMealLog(today(),{ts:Date.now(),note:"Claude送信済み"});
-  } else {
-    // スタンドアロン（GitHub Pages）の場合はテキストメッセージでガイド
-    showToast("Claudeに写真と一緒に質問してください");
-    navigator.clipboard.writeText(msg).catch(()=>{});
-    alert("食事の写真と一緒に以下のメッセージをClaudeに送ってください:\n\n"+msg);
+async function analyzeMealWithGemini(){
+  if(!state.mealBase64){ showToast("写真を選択してください"); return; }
+
+  // ローディング表示
+  const resBox = el("meal-result");
+  resBox.style.display = "block";
+  resBox.innerHTML = `<div class="loading-row"><div class="spinner" style="border-top-color:#4ade80;"></div>AI分析中…しばらくお待ちください</div>`;
+
+  try {
+    const res = await fetch(WORKER_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        imageBase64: state.mealBase64,
+        mimeType: "image/jpeg"
+      })
+    });
+
+    if(!res.ok) throw new Error(`サーバーエラー: ${res.status}`);
+    const data = await res.json();
+    if(data.error) throw new Error(data.error);
+
+    // 記録保存
+    saveMealLog(today(), { result: data, ts: Date.now() });
+    showToast("分析・記録しました ✓");
+    renderMealResult(data);
+
+  } catch(e) {
+    resBox.innerHTML = `<div class="error-box">分析に失敗しました。通信状態を確認して再試行してください。<br><small style="color:#a8a8c0;margin-top:6px;display:block;">${e.message}</small></div>`;
   }
 }
 
