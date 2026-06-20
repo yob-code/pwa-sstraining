@@ -561,17 +561,60 @@ function saveWorkout(){
   showToast("記録しました ✓");
 }
 
-function sendWorkoutToClaude(){
+async function analyzeWorkoutWithGemini(){
   const day=state.menu[state.currentDay];
   const lines=day.exercises.map(e=>`${e.name}${e.note?`（${e.note}）`:""}: ${e.reps}回 × ${e.sets}セット`).join("\n");
-  const msg=`今日の筋トレメニュー（${day.focus}）を分析してください。\n\n${lines}\n\n50代男性向けに：強度・使用筋群・推奨回復日数・タンパク質目安・次回へのアドバイスを教えてください。`;
-  if(window.parent && window.parent !== window){
-    window.parent.postMessage({type:"sendPrompt",text:msg},"*");
-  } else {
-    navigator.clipboard.writeText(msg).then(()=>showToast("コピーしました。Claudeに貼り付けてください")).catch(()=>{
-      alert("以下をClaudeに貼り付けてください:\n\n"+msg);
-    });
+  const workoutText=`今日のトレーニング（${day.focus}）:\n${lines}`;
+  const loading=el("workout-loading");
+  const errBox=el("workout-error");
+  const resBox=el("workout-result");
+  loading.style.display="flex";
+  errBox.style.display="none";
+  resBox.style.display="none";
+  try {
+    const data=await callWorker({type:"workout",workoutText});
+    const volume=day.exercises.reduce((s,e)=>s+e.reps*e.sets,0);
+    saveWorkoutLog(today(),{day:state.currentDay,focus:day.focus,exercises:day.exercises.map(e=>({...e})),volume,aiResult:data});
+    showToast("分析・記録しました ✓");
+    renderWorkoutResult(data);
+  } catch(e) {
+    errBox.textContent="分析に失敗しました。再試行してください: "+e.message;
+    errBox.style.display="block";
+  } finally {
+    loading.style.display="none";
   }
+}
+
+function renderWorkoutResult(data){
+  const resBox=el("workout-result");
+  const intensityColor={軽め:"#4ade80",標準:"#f59e0b",ハード:"#f87171"}[data.intensity]||"#c8c8e0";
+  resBox.style.display="block";
+  resBox.innerHTML=`
+    <div class="result-grid">
+      <div class="result-cell">
+        <div class="result-cell-label">強度</div>
+        <div class="result-cell-val" style="color:${intensityColor};font-size:18px;">${data.intensity||"—"}</div>
+      </div>
+      <div class="result-cell">
+        <div class="result-cell-label">回復目安</div>
+        <div class="result-cell-val">${data.recovery_days||"—"}<span style="font-size:12px;color:#c8c8e0;margin-left:2px;">日</span></div>
+      </div>
+      <div class="result-cell">
+        <div class="result-cell-label">必要PRT</div>
+        <div class="result-cell-val" style="color:#4ade80;">${data.protein_needed||"—"}<span style="font-size:12px;color:#c8c8e0;margin-left:2px;">g</span></div>
+      </div>
+    </div>
+    ${data.muscle_groups?.length?`
+    <div class="card">
+      <div class="card-label">使用筋群</div>
+      <div class="tag-list">${data.muscle_groups.map(m=>`<span class="tag">${m}</span>`).join("")}</div>
+    </div>`:""}
+    ${data.advice?`
+    <div class="advice-box">
+      <div class="advice-label">AIアドバイス</div>
+      <div class="advice-text">${data.advice}</div>
+    </div>`:""}
+  `;
 }
 
 // ============================================================
@@ -617,36 +660,84 @@ function confirmAndAnalyzeMeal(){
 
 const WORKER_URL = "https://old-king-9bab.ksey-fgljfsmg7475219t.workers.dev";
 
+async function callWorker(body) {
+  const res = await fetch(WORKER_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body)
+  });
+  if(!res.ok) throw new Error(`サーバーエラー: ${res.status}`);
+  const data = await res.json();
+  if(data.error) throw new Error(data.error);
+  return data;
+}
+
 async function analyzeMealWithGemini(){
   if(!state.mealBase64){ showToast("写真を選択してください"); return; }
-
-  // ローディング表示
   const resBox = el("meal-result");
   resBox.style.display = "block";
   resBox.innerHTML = `<div class="loading-row"><div class="spinner" style="border-top-color:#4ade80;"></div>AI分析中…しばらくお待ちください</div>`;
-
   try {
-    const res = await fetch(WORKER_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        imageBase64: state.mealBase64,
-        mimeType: "image/jpeg"
-      })
-    });
-
-    if(!res.ok) throw new Error(`サーバーエラー: ${res.status}`);
-    const data = await res.json();
-    if(data.error) throw new Error(data.error);
-
-    // 記録保存
+    const data = await callWorker({ type:"meal", imageBase64: state.mealBase64, mimeType: "image/jpeg" });
     saveMealLog(today(), { result: data, ts: Date.now() });
     showToast("分析・記録しました ✓");
     renderMealResult(data);
-
   } catch(e) {
-    resBox.innerHTML = `<div class="error-box">分析に失敗しました。通信状態を確認して再試行してください。<br><small style="color:#a8a8c0;margin-top:6px;display:block;">${e.message}</small></div>`;
+    resBox.innerHTML = `<div class="error-box">分析に失敗しました。再試行してください。<br><small style="color:#c0c0d0;margin-top:6px;display:block;">${e.message}</small></div>`;
   }
+}
+
+function renderMealResult(data){
+  const resBox = el("meal-result");
+  const confLabel = {high:"高",medium:"中",low:"低"}[data.confidence]||data.confidence||"—";
+  const proteinColor = {不足:"#f87171",適切:"#f59e0b",十分:"#4ade80"}[data.protein_rating]||"#c8c8e0";
+  const n = data.nutrition||{};
+  resBox.style.display = "block";
+  resBox.innerHTML = `
+    ${data.dishes?.length?`
+    <div class="card">
+      <div class="card-label">認識した料理</div>
+      ${data.dishes.map((d,i)=>`
+        <div style="display:flex;justify-content:space-between;font-size:14px;padding:6px 0;${i<data.dishes.length-1?'border-bottom:1px solid #2a2a3a':''}">
+          <span style="color:#f0f0f5;">${d.name}</span>
+          <span style="color:#c8c8e0;font-size:13px;">${d.amount}</span>
+        </div>`).join('')}
+    </div>`:''}
+    <div class="card" style="display:flex;justify-content:space-between;align-items:center;">
+      <div>
+        <div style="font-size:13px;color:#c8c8e0;margin-bottom:4px;">推定カロリー</div>
+        <div style="font-size:40px;font-weight:800;letter-spacing:-2px;line-height:1;color:#f0f0f5;">${n.calories||"—"}<span style="font-size:14px;color:#c8c8e0;margin-left:4px;font-weight:400;">kcal</span></div>
+      </div>
+      <div style="font-size:12px;color:#c8c8e0;background:#0d0d11;padding:6px 11px;border-radius:8px;">精度 <span style="color:#f0f0f5;">${confLabel}</span></div>
+    </div>
+    ${[
+      {key:"protein",label:"タンパク質",color:"#4ade80",max:60},
+      {key:"carbs",label:"炭水化物",color:"#f59e0b",max:150},
+      {key:"fat",label:"脂質",color:"#f87171",max:60}
+    ].map(({key,label,color,max})=>{
+      const val=n[key]||0;
+      return `<div class="card pbar-wrap" style="margin-bottom:8px;">
+        <div class="pbar-header">
+          <span class="pbar-label">${label}</span>
+          <span class="pbar-val">${val}<span style="font-size:12px;color:#c8c8e0;margin-left:2px;">g</span></span>
+        </div>
+        <div class="pbar-track"><div class="pbar-fill" style="width:${Math.min((val/max)*100,100)}%;background:${color};"></div></div>
+      </div>`;
+    }).join('')}
+    <div class="card" style="display:flex;align-items:center;gap:12px;">
+      <div style="width:12px;height:12px;border-radius:50%;background:${proteinColor};box-shadow:0 0 8px ${proteinColor};flex-shrink:0;"></div>
+      <div>
+        <div style="font-size:13px;color:#c8c8e0;">タンパク質評価</div>
+        <div style="font-size:16px;font-weight:700;margin-top:2px;color:#f0f0f5;">${data.protein_rating||"—"}</div>
+      </div>
+    </div>
+    ${data.comment?`
+    <div class="meal-advice-box">
+      <div class="meal-advice-label">AIアドバイス</div>
+      <div class="meal-advice-text">${data.comment}</div>
+    </div>`:''}
+    <div style="font-size:12px;color:#606080;text-align:center;padding:4px 0 8px;">※推定値です。実際とは±20〜30%の誤差があります</div>
+  `;
 }
 
 // ============================================================
