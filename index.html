@@ -663,7 +663,10 @@ const WORKER_URL = "https://old-king-9bab.ksey-fgljfsmg7475219t.workers.dev";
 async function callWorker(body) {
   const res = await fetch(WORKER_URL, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      "X-App-Token": "fit2026-m4Vp8wNzT6qY"
+    },
     body: JSON.stringify(body)
   });
   if(!res.ok) throw new Error(`サーバーエラー: ${res.status}`);
