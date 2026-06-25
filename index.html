@@ -378,7 +378,7 @@ const DEFAULT_MENU = {
   3:{label:"Day 3",focus:"脚・肩・背中",exercises:[
     {id:"e5",name:"ブルガリアンスクワット",reps:15,sets:5,note:"片足"},
     {id:"e6",name:"ショルダープレス",reps:15,sets:5},
-    {id:"e7",name:"ワンハンドロー",reps:20,sets:5}
+    {id:"e7",name:"ワンハンドロー",reps:20,sets:5,note:"片手"}
   ]}
 };
 
@@ -433,7 +433,22 @@ window.addEventListener("load",()=>{
   renderDaySelector();
   renderExercises();
   renderMeasureHistory();
-  if("serviceWorker" in navigator) navigator.serviceWorker.register("./sw.js").catch(()=>{});
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('./sw.js').then(reg => {
+    reg.update();
+    reg.addEventListener('updatefound', () => {
+      const newWorker = reg.installing;
+      newWorker.addEventListener('statechange', () => {
+        if(newWorker.state === 'installed' && navigator.serviceWorker.controller){
+          newWorker.postMessage('skipWaiting');
+        }
+      });
+    });
+  }).catch(()=>{});
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    window.location.reload();
+  });
+}
 });
 
 // ============================================================
@@ -663,10 +678,7 @@ const WORKER_URL = "https://old-king-9bab.ksey-fgljfsmg7475219t.workers.dev";
 async function callWorker(body) {
   const res = await fetch(WORKER_URL, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "X-App-Token": "fit2026-m4Vp8wNzT6qY"
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body)
   });
   if(!res.ok) throw new Error(`サーバーエラー: ${res.status}`);
