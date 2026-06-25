@@ -182,6 +182,39 @@ input,button,select{font-family:inherit;font-size:16px;}
 .body-cell-unit{font-size:13px;color:#c8c8e0;}
 
 @keyframes spin{to{transform:rotate(360deg);}}
+/* タブレット・横向き対応 */
+@media (min-width: 600px) {
+  #app { max-width: 100%; }
+  #tabbar { max-width: 100%; }
+  #content { max-width: 100%; }
+  .tab-pane { padding: 20px 24px; max-width: 100%; }
+}
+
+@media (min-width: 768px) and (orientation: landscape) {
+  #content { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+  .tab-pane { 
+    display: grid !important; 
+    grid-template-columns: 1fr 1fr; 
+    gap: 16px; 
+    align-items: start;
+    padding: 20px;
+  }
+  .tab-pane > *:first-child { grid-column: 1; }
+  #tab-workout .day-selector { grid-column: 1 / -1; }
+  #tab-workout #ex-list { grid-column: 1; }
+  #tab-workout #workout-result { grid-column: 2; }
+  #tab-graph { display: block !important; columns: 2; gap: 16px; }
+  #tab-graph .card { break-inside: avoid; margin-bottom: 16px; }
+  .measure-grid { grid-template-columns: 1fr 1fr 1fr; }
+  .day-selector { display: flex; }
+  .result-grid { grid-template-columns: 1fr 1fr 1fr; }
+}
+
+@media (min-width: 1024px) {
+  .tab-pane { max-width: 960px; margin: 0 auto; }
+  #tabbar { max-width: 100%; }
+}
+
 </style>
 </head>
 <body>
